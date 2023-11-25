@@ -1,0 +1,412 @@
+import mysql.connector as msc
+
+def main_menu():
+        print("Press 1 to add a new train")#done
+        print("Press 2 to modify the train")#done
+        print("Press 3 to delete an existing train")#done
+        print("Press 4 to search an existing train")#done      
+        print("Press 5 to purchase a ticket")#done
+        print("Press 6 to cancle a ticket")#done
+        print("Press 7 to search an existing passenger")#done
+        print("Press 8 to modify the passenger")#done
+        print("Press 9 to view all trains")#done
+        print("Press 10 to view all travellers")#done
+        print("Press 11 to exit")
+
+def train_search_menu():
+        print("Press 1 to search by train id")
+        print("Press 2 to search by train name")
+        print("Press 3 to search by train path")
+
+def search_train_id():
+        tid=int(input("Enter train id to be searched "))
+        query="select * from trains where train_id={}".format(tid)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Train ID")
+        else:
+                print("Train ID:",record[0])
+                print("Train Name:",record[1])                
+                print("Train Path:",record[2])
+                print("Arrival Time:",record[3])
+                print("Departure time:",record[4])
+                print("Platform Number:",record[5])
+                print("Seat Availability:",record[6])
+
+
+def search_train_name():
+        tname=input("Enter train name to be searched ")
+        query="select * from trains where train_name='{}'".format(tname)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Train Name")
+        else:
+                print("Train ID:",record[0])
+                print("Train Name:",record[1])                
+                print("Train Path:",record[2])
+                print("Arrival Time:",record[3])
+                print("Departure time:",record[4])
+                print("Platform Number:",record[5])
+                print("Seat Availability:",record[6])
+
+def search_train_path():
+        tpath=input("Enter train path to be searched ")
+        query="select * from trains where train_path='{}'".format(tpath)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Train Path")
+        else:
+                print("Train ID:",record[0])
+                print("Train Name:",record[1])                
+                print("Train Path:",record[2])
+                print("Arrival Time:",record[3])
+                print("Departure time:",record[4])
+                print("Platform Number:",record[5])
+                print("Seat Availability:",record[6])
+
+def passenger_search_menu():
+        print("Press 1 to search by ticket number")
+        print("Press 2 to search by passenger name")
+        
+
+def search_passenger_id():
+        tno=int(input("Enter passenger ticket number to be searched "))
+        query="select * from passenger where ticket_no={}".format(tno)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Ticket Number")
+        else:
+                print("Ticket NO:",record[0])
+                print("Passenger Name:",record[1])                
+                print("Age:",record[2])
+                print("Sex:",record[3])
+                print("Train Name:",record[4])
+                print("Coach Type:",record[5])
+                print("Seat Allotted:",record[6])
+
+
+def search_passenger_name():
+        tname=(input("Enter passenger name to be searched "))
+        query="select * from passenger where passenger_name='{}'".format(tname)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Passenger Name")
+        else:
+                print("Ticket NO:",record[0])
+                print("Passenger Name:",record[1])                
+                print("Age:",record[2])
+                print("Sex:",record[3])
+                print("Train Name:",record[4])
+                print("Coach Type:",record[5])
+                print("Seat Allotted:",record[6])
+
+
+def add_train():
+        train_id=input("Enter train id ")
+        train_name=input("Enter train name ")
+        train_path=input("Enter train path ")
+        arrival_time=input("Enter arrival time ")
+        departure_time=input("Enter departure time ")
+        platform_number=int(input("Enter platform number "))
+        seat_availability=int(input("Enter total seats available in the train "))
+        query="insert into trains(train_id,train_name,train_path,arrival_time,departure_time,platform_number,seat_availability) values('{}','{}','{}','{}','{}','{}','{}')".format(train_id,train_name,train_path,arrival_time,departure_time,platform_number,seat_availability)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+        print("Data Saved")
+
+def add_passenger():
+        query="select * from trains"
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        records=cursor.fetchall()
+        print("Train ID\tTrain Name\t\tTrain Path\tArrival Time\tDeparture Time\tPlatform Number\tSeat Availability")
+        for record in records:
+                print(record[0],"\t\t",record[1],"\t",record[2],"\t",record[3],"\t\t",record[4],"\t\t",record[5],"\t\t",record[6])
+        ticket_no=int(input("Enter ticket number "))
+        passenger_name=(input("Enter passenger name "))
+        age=int(input("Enter age "))
+        sex=input("Enter sex ")
+        train_name=input("Enter train name ")
+        if i>0:
+                
+        
+                coach_type=input("Enter coach type ")
+                seat_allotted=input("Enter seat allotted ")
+                query="insert into passenger(ticket_no,passenger_name,age,sex,train_name,coach_type,seat_allotted) values({},'{}',{},'{}','{}','{}','{}')".format(ticket_no,passenger_name,age,sex,train_name,coach_type,seat_allotted)
+                conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+                cursor=conn.cursor()
+                cursor.execute(query)
+                conn.commit()
+                conn.close()
+                print("Data Saved Have a Safe ride")
+                query="select seat_availability from trains where train_name='{}' ".format(train_name)
+                conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+                cursor=conn.cursor()
+                cursor.execute(query)
+                records=cursor.fetchone()
+                for i in records:
+                        i=int(i)
+                        i=i-1
+                query="update trains set seat_availability={} where train_name='{}'".format(i,train_name)
+                conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+                cursor=conn.cursor()
+                cursor.execute(query)
+                conn.commit()
+                conn.close()
+        else:
+                print(" No seats available")
+        
+
+def delete_train():
+        query="select * from trains"
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        records=cursor.fetchall()
+        print("Train ID\tTrain Name\t\tTrain Path\tArrival Time\tDeparture Time\tPlatform Number\tSeat Availability")
+        for record in records:
+                print(record[0],"\t\t",record[1],"\t",record[2],"\t",record[3],"\t\t",record[4],"\t\t",record[5],"\t\t",record[6])
+        tid=int(input("Enter train id to be deleted "))
+        query="select * from trains where train_id={}".format(tid)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Train ID")
+        else:
+                print("Train ID:",record[0])
+                print("Train Name:",record[1])                
+                print("Train Path:",record[2])
+                print("Arrival Time:",record[3])
+                print("Departure time:",record[4])
+                print("Platform Number:",record[5])
+                print("Seat Availability:",record[6])
+        
+                my_choice=input("Would you like to delete the record <y/n>")
+                if my_choice=="y":
+                        query="delete from trains where train_id={}".format(tid)
+                        cursor.execute(query)
+                        conn.commit()
+                        print("Record deleted")
+
+def delete_passenger():
+        tno=int(input("Enter passenger ticket id to be deleted "))
+        query="select * from passenger where ticket_no={}".format(tno)
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()        
+        if record==None:
+                print("Sorry invalid Ticket Number")
+        else:
+                print("Ticket NO:",record[0])
+                print("Passenger Name:",record[1])                
+                print("Age:",record[2])
+                print("Sex:",record[3])
+                print("Train Name:",record[4])
+                print("Coach Type:",record[5])
+                print("Seat Allotted:",record[6])
+
+                my_choice=input("Would you like to delete the record <y/n>")
+                if my_choice=="y":
+                        query="delete from passenger where ticket_no={}".format(tno)
+                        cursor.execute(query)
+                        conn.commit()
+                        print("Record deleted")
+def show_trains():
+        query="select * from trains"
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        records=cursor.fetchall()
+        print("Train ID\tTrain Name\t\tTrain Path\tArrival Time\tDeparture Time\tPlatform Number\tSeat Availability")
+        for record in records:
+                print(record[0],"\t\t",record[1],"\t",record[2],"\t",record[3],"\t\t",record[4],"\t\t",record[5],"\t\t",record[6])
+
+def show_passengers():
+        query="select * from passenger"
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        records=cursor.fetchall()
+        print("Ticket Number\tPassenger Name\tAge\tSex\tTrain Name\tCoach Type\tSeat Allotted")
+        for record in records:
+                print(record[0],"\t",record[1],"\t",record[2],"\t",record[3],"\t",record[4],"\t",record[5],"\t",record[6])
+
+
+def update_train():
+        tid=int(input("Enter ID to be updated "))
+        query="select * from trains where train_id={}".format(tid)        
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()
+        if record==None:
+                print("Invalid Train_id")
+        else:
+                train_id=record[0]
+                train_name=record[1]
+                train_path=record[2]
+                arrival_time=record[3]
+                departure_time=record[4]
+                platform_number=record[5]
+                seat_availability=record[6]
+                print("Train ID:",record[0])
+                print("Train Name:",record[1])                
+                print("Train Path:",record[2])
+                print("Arrival Time:",record[3])
+                print("Departure time:",record[4])
+                print("Platform Number:",record[5])
+                print("Seat Availability:",record[6])
+
+                my_choice=input("Would you like to change name <y/n> ")
+                if my_choice=="y":
+                          train_name=input("Enter new name ")
+                my_choice=input("Would you like to change path <y/n> ")
+                if my_choice=="y":
+                          train_path=input("Enter new path ")
+                my_choice=input("Would you like to change Arrival Time <y/n> ")
+                if my_choice=="y":
+                          arrival_time=input("Enter new time ")
+                my_choice=input("Would you like to change Departure Time <y/n> ")
+                if my_choice=="y":
+                          departure_time=input("Enter new pno ")
+                my_choice=input("Would you like to change Platform Number <y/n> ")
+                if my_choice=="y":
+                          platform_number=int(input("Enter new Platform Number "))
+                my_choice=input("Would you like to change Seat Availability <y/n> ")
+                if my_choice=="y":
+                          seat_availability=input("Enter new information ")
+                query="update trains set train_name='{}',train_path='{}',arrival_time='{}',departure_time='{}',platform_number={},seat_availability={} where train_id={}".format(train_name,train_path,arrival_time,departure_time,platform_number,seat_availability,tid)
+                cursor.execute(query)
+                conn.commit()
+                print("Record updated")
+        conn.close()
+
+def update_passenger():
+        pid=int(input("Enter ID to be updated "))
+        query="select * from passenger where ticket_no={}".format(pid)        
+        conn=msc.connect(host="localhost",user="root",password="india",database="ris")
+        cursor=conn.cursor()
+        cursor.execute(query)
+        record=cursor.fetchone()
+        if record==None:
+                print("Invalid Train_id")
+        else:
+                ticket_no=record[0]
+                passenger_name=record[1]
+                age=record[2]
+                sex=record[3]
+                train_name=record[4]
+                coach_type=record[5]
+                seat_allotted=record[6]
+                print("Ticket NO:",record[0])
+                print("Passenger Name:",record[1])                
+                print("Age:",record[2])
+                print("Sex:",record[3])
+                print("Train Name:",record[4])
+                print("Coach Type:",record[5])
+                print("Seat Allotted:",record[6])
+                my_choice=input("Would you like to change Passenger Name <y/n> ")
+                if my_choice=="y":
+                          passenger_name=input("Enter new name ")
+                my_choice=input("Would you like to change age <y/n> ")
+                if my_choice=="y":
+                          age=int(input("Enter new Age "))
+                my_choice=input("Would you like to change sex <y/n> ")
+                if my_choice=="y":
+                          sex=input("Enter new sex")
+                my_choice=input("Would you like to change train_name <y/n> ")
+                if my_choice=="y":
+                          train_name=input("Enter new Train Name ")
+                my_choice=input("Would you like to change coach type <y/n> ")
+                if my_choice=="y":
+                          coach_type=input("Enter new Coach Type ")
+                my_choice=input("Would you like to change Seat Allotted <y/n> ")
+                if my_choice=="y":
+                          seat_allotted=input("Enter new information ")
+                query="update passenger set passenger_name='{}',age={},sex='{}',train_name='{}',coach_type='{}',seat_allotted='{}' where ticket_no={}".format(passenger_name,age,sex,train_name,coach_type,seat_allotted,pid)
+                cursor.execute(query)
+                conn.commit()
+                print("Record updated")
+        conn.close()
+
+print("\t\t\tWelcome to the Indian Railways")
+from datetime import datetime
+
+now = datetime.now()
+
+current_time = now.strftime("%H:%M:%S")
+print("Current Time =", current_time)
+
+from datetime import date
+
+today = date.today()
+print("Today's date:", today)
+print("\n")
+
+ch=1
+while ch!=11:
+        main_menu()
+        ch=int(input("Enter Choice "))
+        if ch==1:
+                add_train()
+        elif ch==5:
+                add_passenger()
+        elif ch==4:
+                train_search_menu()
+                choice=int(input("Enter Choice "))
+                if choice==1:
+                        search_train_id()
+                elif choice==2:
+                        search_train_name()
+                elif choice==3:
+                        search_train_path()
+                else:
+                        print("Invalid Choice ")
+        elif ch==7:
+                passenger_search_menu()
+                choice=int(input("Enter Choice "))
+                if choice==1:
+                        search_passenger_id()
+                elif choice==2:
+                        search_passenger_name()
+                else:
+                        print("Invalid Choice ")
+        elif ch==2:
+                update_train()
+        elif ch==6:
+                delete_passenger()
+        elif ch==3:
+                delete_train()
+        elif ch==8:
+                update_passenger()
+        elif ch==9:
+                show_trains()
+        elif ch==10:
+                show_passengers()
+        elif ch>11:
+                print("Please enter valid choice")
+        elif ch==11:
+                break
+        
